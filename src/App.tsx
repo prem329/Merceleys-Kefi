@@ -1,0 +1,556 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { IceCream, Sparkles, Tag, Calendar, Percent, Gift, ChevronDown, Coffee, CupSoda } from 'lucide-react';
+
+// ============================================================================
+// OFFERS DATA - EDIT THIS SECTION TO ADD/REMOVE GLOBAL OFFERS
+// ============================================================================
+const OFFERS_DATA = [
+  // { 
+  //   id: 'off1', 
+  //   title: 'Wednesday Special', 
+  //   description: 'Come on Wednesday and buy any scoop for just ₹99!', 
+  //   icon: Calendar 
+  // },
+  // { 
+  //   id: 'off2', 
+  //   title: 'Combo Delight', 
+  //   description: 'Buy any Smoothie + Waffle and get 10% OFF your total bill.', 
+  //   icon: Percent 
+  // }
+];
+
+// ============================================================================
+// MENU DATA - EDIT THIS SECTION TO ADD/REMOVE ITEMS
+// ============================================================================
+const MENU_DATA = [
+  {
+    id: 'smoothies',
+    title: 'Smoothies',
+    items: [
+      { id: 'sm1', name: 'Tropical Bliss', description: 'Mango Passion', price: 212, isNew: true, image: 'https://images.pexels.com/photos/5817621/pexels-photo-5817621.jpeg' },
+      { id: 'sm2', name: 'Berry Burst', description: 'Blueberry', price: 200, discount: '₹20 OFF', originalPrice: 220, image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=200&q=80' },
+      { id: 'sm3', name: 'Nutty Choco Delight', description: 'Chocolate Peanut Butter', price: 177, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=200&q=80' },
+      { id: 'sm4', name: 'Strawberry Dream', description: '', price: 200, image: 'https://images.pexels.com/photos/6678631/pexels-photo-6678631.jpeg' },
+    ]
+  },
+  {
+    id: 'floats',
+    title: 'Ice Cream Float',
+    items: [
+      { id: 'fl1', name: 'Blueberry Breeze Float', description: 'Blueberry', price: 211, image: 'https://images.pexels.com/photos/2291070/pexels-photo-2291070.jpeg' },
+      { id: 'fl2', name: 'Strawberry Swirl Float', description: 'Strawberry', price: 179, image: 'https://images.unsplash.com/photo-1724805053611-54c999f9c70c?q=80&w=706&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+      { id: 'fl3', name: 'Mocha Chill', description: 'Coffee', price: 179, discount: '10% OFF', originalPrice: 199, image: 'https://images.pexels.com/photos/12252713/pexels-photo-12252713.jpeg' },
+      { id: 'fl4', name: 'Mango Splash', description: 'Mango', price: 179, image: 'https://images.pexels.com/photos/28525188/pexels-photo-28525188.jpeg' },
+    ]
+  },
+  {
+    id: 'falooda',
+    title: 'Falooda',
+    items: [
+      { id: 'fa1', name: 'Exotic Dry Fruit Delight', description: '', price: 243, isNew: true, image: 'https://icypep.in/wp-content/uploads/2025/10/Dry-Fruit-Falooda-.jpg' },
+      { id: 'fa2', name: 'Gulab Jamun', description: '', price: 243, image: 'https://i.pinimg.com/736x/81/de/2e/81de2e2fafe91258b6cc2a23b8ee6e6d.jpg' },
+      { id: 'fa3', name: 'Fruit Falooda Fiesta', description: '', price: 243, image: 'https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_960,w_960//InstamartAssets/Receipes/fruit_falooda.webp' },
+      { id: 'fa4', name: 'Nutty Mango Paradise', description: '', price: 198, image: 'https://cookingfromheart.com/wp-content/uploads/2022/04/Royal-Falooda-3.jpg' },
+    ]
+  },
+  {
+    id: 'sundaes',
+    title: 'Sundaes',
+    items: [
+      { id: 'su1', name: 'Death by Chocolate', description: '', price: 205, image: 'https://images.pexels.com/photos/15455284/pexels-photo-15455284.jpeg' },
+      { id: 'su2', name: 'Choco Hazelnut Heaven', description: '', price: 179, image: 'https://images.pexels.com/photos/1028419/pexels-photo-1028419.jpeg' },
+      { id: 'su3', name: 'Classic Oreo Crunch', description: '', price: 170, image: 'https://images.pexels.com/photos/6160893/pexels-photo-6160893.jpeg' },
+      { id: 'su4', name: 'Roasted Banana Delight', description: '', price: 230, discount: '₹20 OFF', originalPrice: 250, image: 'https://images.pexels.com/photos/13000186/pexels-photo-13000186.jpeg' },
+    ]
+  },
+  {
+    id: 'waffles',
+    title: 'Waffles',
+    items: [
+      { id: 'wa1', name: 'Blueberry Bliss Waffle', description: '', price: 220, image: 'https://images.pexels.com/photos/14686152/pexels-photo-14686152.jpeg' },
+      { id: 'wa2', name: 'Nutella Dream Waffle', description: '', price: 220, image: 'https://images.pexels.com/photos/789327/pexels-photo-789327.jpeg' },
+      { id: 'wa3', name: 'Oreo Vanilla Crunch Waffle', description: '', price: 199, image: 'https://images.pexels.com/photos/374830/pexels-photo-374830.jpeg' },
+      { id: 'wa4', name: 'Mango Crunch Waffle', description: '', price: 231, isNew: true, image: 'https://images.pexels.com/photos/264727/pexels-photo-264727.jpeg' },
+    ]
+  },
+  {
+    id: 'mocktail',
+    title: 'Mocktail',
+    items: [
+      { id: 'mo1', name: 'Blueberry Mojito', description: '', price: 139, image: 'https://images.pexels.com/photos/2093089/pexels-photo-2093089.jpeg' },
+      { id: 'mo2', name: 'Chilli Guava Popsicle Spritzer', description: '', price: 119, image: 'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=200&q=80' },
+      { id: 'mo3', name: 'Mango Popsicle Spritzer', description: '', price: 119, image: 'https://images.pexels.com/photos/5817518/pexels-photo-5817518.jpeg' },
+      { id: 'mo4', name: 'Pineapple Popsicle Spritzer', description: '', price: 119, image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=200&q=80' },
+    ]
+  },
+  {
+    id: 'pancake',
+    title: 'Pancake',
+    items: [
+      { id: 'pa1', name: 'Blueberry Pancake', description: '', price: 220, image: 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=200&q=80' },
+      { id: 'pa2', name: 'Chocolate Pancake', description: '', price: 220, image: 'https://images.pexels.com/photos/574111/pexels-photo-574111.jpeg' },
+      { id: 'pa3', name: 'Strawberry Pancake', description: '', price: 220, image: 'https://images.pexels.com/photos/30911259/pexels-photo-30911259.jpeg' },
+    ]
+  },
+  {
+    id: 'scoops',
+    title: 'Ice Cream Scoops',
+    items: [
+      { id: 'sc1', name: 'Vanilla', description: '', price: 84, image: 'https://images.pexels.com/photos/14105990/pexels-photo-14105990.jpeg' },
+      { id: 'sc2', name: 'Chocolate', description: '', price: 84, image: 'https://images.pexels.com/photos/9227962/pexels-photo-9227962.jpeg' },
+      { id: 'sc3', name: 'Strawberry', description: '', price: 84, image: 'https://images.pexels.com/photos/20446417/pexels-photo-20446417.jpeg' },
+      { id: 'sc4', name: 'Spanish Delight', description: '', price: 84, image: 'https://images.pexels.com/photos/22809606/pexels-photo-22809606.jpeg' },
+      { id: 'sc5', name: 'Fig and Honey', description: '', price: 84, image: 'https://images.pexels.com/photos/28735375/pexels-photo-28735375.jpeg' },
+      { id: 'sc6', name: 'Mango', description: '', price: 84, image: 'https://images.pexels.com/photos/5060371/pexels-photo-5060371.jpeg' },
+      { id: 'sc7', name: 'Kulfi', description: '', price: 84, image: 'https://www.cookclickndevour.com/wp-content/uploads/2017/03/thandai-kulfi-recipe-f.jpg' },
+      { id: 'sc8', name: 'Coffee', description: '', price: 84, image: 'https://images.pexels.com/photos/9442600/pexels-photo-9442600.jpeg' },
+      { id: 'sc9', name: 'Passion Fruit', description: '', price: 84, image: 'https://images.pexels.com/photos/19164109/pexels-photo-19164109.jpeg' },
+      { id: 'sc10', name: 'Blueberry', description: '', price: 84, image: 'https://images.pexels.com/photos/8807333/pexels-photo-8807333.jpeg' },
+      { id: 'sc11', name: 'Strawberry cheesecake', description: '', price: 105, image: 'https://images.pexels.com/photos/2161643/pexels-photo-2161643.jpeg' },
+      { id: 'sc12', name: 'Red Velvet', description: '', price: 84, image: 'https://images.pexels.com/photos/5535557/pexels-photo-5535557.jpeg' },
+      { id: 'sc13', name: 'Tender Coconut', description: '', price: 84, image: 'https://images.pexels.com/photos/16630830/pexels-photo-16630830.jpeg' },
+      { id: 'sc14', name: 'Chikku', description: '', price: 84, image: 'https://images.pexels.com/photos/8589559/pexels-photo-8589559.jpeg' },
+      { id: 'sc15', name: 'Sitapal', description: '', price: 84, image: 'https://images.pexels.com/photos/2586924/pexels-photo-2586924.jpeg' },
+      { id: 'sc16', name: 'Butterscotch', description: '', price: 84, image: 'https://images.pexels.com/photos/15766466/pexels-photo-15766466.jpeg' },
+    ]
+  }
+];
+
+export default function App() {
+  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState(OFFERS_DATA.length > 0 ? 'offers' : MENU_DATA[0].id);
+  const [loadingIconIndex, setLoadingIconIndex] = useState(0);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  const loadingIcons = [IceCream, CupSoda, Coffee];
+
+  useEffect(() => {
+    // Cycle through icons for the preloader
+    const iconInterval = setInterval(() => {
+      setLoadingIconIndex((prev) => (prev + 1) % loadingIcons.length);
+    }, 800);
+
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(iconInterval);
+    };
+  }, []);
+
+  const scrollToCategory = (id: string) => {
+    setActiveCategory(id);
+    const element = document.getElementById(id);
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.scrollY - 140;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const scrollToMenu = () => {
+    const element = document.getElementById('menu-start');
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.scrollY - 140;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  // Update active category on scroll and auto-scroll navbar
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 150;
+      
+      let currentActive = activeCategory;
+
+      // Check offers section first
+      if (OFFERS_DATA.length > 0) {
+        const offersEl = document.getElementById('offers');
+        if (offersEl) {
+          const { top, bottom } = offersEl.getBoundingClientRect();
+          if (scrollPosition >= top + window.scrollY && scrollPosition <= bottom + window.scrollY) {
+            currentActive = 'offers';
+          }
+        }
+      }
+      
+      // Check menu categories
+      for (const category of MENU_DATA) {
+        const element = document.getElementById(category.id);
+        if (element) {
+          const { top, bottom } = element.getBoundingClientRect();
+          const elementTop = top + window.scrollY;
+          const elementBottom = bottom + window.scrollY;
+          
+          if (scrollPosition >= elementTop && scrollPosition <= elementBottom) {
+            currentActive = category.id;
+            break;
+          }
+        }
+      }
+
+      if (currentActive !== activeCategory) {
+        setActiveCategory(currentActive);
+        
+        // Auto-scroll the navbar to keep the active button in view
+        if (navRef.current) {
+          const activeBtn = document.getElementById(`nav-${currentActive}`);
+          if (activeBtn) {
+            const container = navRef.current;
+            const scrollLeft = activeBtn.offsetLeft - container.offsetWidth / 2 + activeBtn.offsetWidth / 2;
+            container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+          }
+        }
+      }
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [activeCategory]);
+
+  const LoadingIcon = loadingIcons[loadingIconIndex];
+
+  return (
+    <div className="min-h-screen bg-[#1A0B2E] text-white font-sans selection:bg-yellow-400 selection:text-purple-900">
+      <AnimatePresence>
+        {loading && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-yellow-400"
+          >
+            <div className="relative w-24 h-24 flex items-center justify-center mb-6">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={loadingIconIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute text-[#1A0B2E]"
+                >
+                  <LoadingIcon size={64} strokeWidth={1.5} />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            <motion.h1 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-3xl font-bold tracking-wider text-[#1A0B2E] text-center uppercase"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Merceleys Kefi
+            </motion.h1>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hero Section */}
+      <section className="relative h-screen w-full flex flex-col items-center justify-center bg-yellow-400 overflow-hidden">
+        {/* Decorative Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div 
+            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }} 
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-20 left-10 text-yellow-500/50"
+          >
+            <Sparkles size={48} />
+          </motion.div>
+          <motion.div 
+            animate={{ y: [0, 30, 0], rotate: [0, -10, 0] }} 
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-40 right-12 text-yellow-500/40"
+          >
+            <IceCream size={64} />
+          </motion.div>
+          <motion.div 
+            animate={{ y: [0, -15, 0], rotate: [0, 15, 0] }} 
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-40 left-20 text-yellow-500/40"
+          >
+            <CupSoda size={56} />
+          </motion.div>
+          <motion.div 
+            animate={{ y: [0, 25, 0], rotate: [0, -5, 0] }} 
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-32 right-24 text-yellow-500/50"
+          >
+            <Coffee size={48} />
+          </motion.div>
+          
+          {/* Abstract blobs - optimized for performance */}
+          <div className="absolute top-1/4 -left-20 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, rgba(253,224,71,0.4) 0%, rgba(253,224,71,0) 70%)' }}></div>
+          <div className="absolute top-1/3 -right-20 w-72 h-72 rounded-full" style={{ background: 'radial-gradient(circle, rgba(234,179,8,0.4) 0%, rgba(234,179,8,0) 70%)' }}></div>
+          <div className="absolute -bottom-32 left-1/3 w-80 h-80 rounded-full" style={{ background: 'radial-gradient(circle, rgba(253,224,71,0.4) 0%, rgba(253,224,71,0) 70%)' }}></div>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 flex flex-col items-center px-6 text-center -mt-20 sm:-mt-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="flex flex-col items-center"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl"></div>
+              <img 
+                src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Soft%20ice%20cream/3D/soft_ice_cream_3d.png" 
+                alt="Ice Cream" 
+                className="w-64 h-64 object-contain mb-6 drop-shadow-2xl relative z-10"
+              />
+            </div>
+            <h1 
+              className="text-5xl font-bold text-[#1A0B2E] uppercase tracking-wider mb-2 drop-shadow-sm"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Merceleys Kefi
+            </h1>
+            <p className="text-purple-900 tracking-[0.3em] text-sm font-bold uppercase bg-white/50 px-4 py-1 rounded-full">
+              BTM Layout
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.button
+          onClick={scrollToMenu}
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-24 z-10 flex flex-col items-center text-purple-900 hover:text-purple-700 transition-colors"
+        >
+          <span className="text-xs tracking-widest uppercase mb-2 font-bold bg-white/50 px-4 py-2 rounded-full shadow-sm">Explore Menu</span>
+          <ChevronDown size={28} className="drop-shadow-md mt-1" />
+        </motion.button>
+      </section>
+
+      {/* Sticky Header */}
+      <header id="menu-start" className="sticky top-0 z-40 bg-[#1A0B2E]/95 backdrop-blur-md border-b border-purple-800/50 pt-4 pb-2 shadow-lg">
+        {/* Categories Navbar */}
+        <div 
+          ref={navRef}
+          className="flex overflow-x-auto hide-scrollbar px-4 pb-2 gap-3 snap-x scroll-smooth"
+        >
+          {OFFERS_DATA.length > 0 && (
+            <button
+              id="nav-offers"
+              onClick={() => scrollToCategory('offers')}
+              className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition-all snap-start flex items-center gap-2 ${
+                activeCategory === 'offers'
+                  ? 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)]'
+                  : 'bg-purple-900/50 text-red-300 border border-red-900/50 hover:bg-purple-800/50'
+              }`}
+            >
+              <Gift size={14} />
+              Offers
+            </button>
+          )}
+          {MENU_DATA.map((category) => (
+            <button
+              key={category.id}
+              id={`nav-${category.id}`}
+              onClick={() => scrollToCategory(category.id)}
+              className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition-all snap-start ${
+                activeCategory === category.id
+                  ? 'bg-yellow-400 text-[#1A0B2E] shadow-[0_0_15px_rgba(250,204,21,0.4)]'
+                  : 'bg-purple-900/50 text-purple-200 border border-purple-700/50 hover:bg-purple-800/50'
+              }`}
+            >
+              {category.title}
+            </button>
+          ))}
+        </div>
+      </header>
+
+      {/* Menu Content */}
+      <main className="px-4 py-8 max-w-md mx-auto pb-24">
+        
+        {/* Offers Section */}
+        {OFFERS_DATA.length > 0 && (
+          <motion.section 
+            id="offers" 
+            className="mb-12 scroll-mt-36"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px bg-gradient-to-r from-transparent to-red-500 flex-1"></div>
+              <h2 
+                className="text-xl font-bold text-red-400 uppercase tracking-widest flex items-center gap-2"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                <Gift size={20} />
+                Special Offers
+              </h2>
+              <div className="h-px bg-gradient-to-l from-transparent to-red-500 flex-1"></div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              {OFFERS_DATA.map((offer, index) => {
+                const Icon = offer.icon;
+                return (
+                  <motion.div
+                    key={offer.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="relative bg-gradient-to-br from-red-950/40 to-purple-900/40 rounded-2xl p-4 border border-red-500/30 shadow-lg overflow-hidden"
+                  >
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+                    <div className="flex items-start gap-4 relative z-10">
+                      <div className="bg-red-500/20 p-3 rounded-xl text-red-400">
+                        <Icon size={24} />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-red-100 text-lg">{offer.title}</h3>
+                        <p className="text-red-200/80 text-sm mt-1 leading-relaxed">
+                          {offer.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.section>
+        )}
+
+        {/* Categories */}
+        {MENU_DATA.map((category, catIndex) => (
+          <motion.section 
+            key={category.id} 
+            id={category.id} 
+            className="mb-12 scroll-mt-36"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px bg-gradient-to-r from-transparent to-purple-700 flex-1"></div>
+              <h2 
+                className="text-xl font-bold text-yellow-400 uppercase tracking-widest"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                {category.title}
+              </h2>
+              <div className="h-px bg-gradient-to-l from-transparent to-purple-700 flex-1"></div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              {category.items.map((item, itemIndex) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: itemIndex * 0.1 }}
+                  className="relative flex items-center bg-[#251442] rounded-2xl p-3 border border-purple-800/30 shadow-lg overflow-hidden group"
+                >
+                  {/* Badges Container */}
+                  <div className="absolute top-0 right-0 flex flex-col items-end gap-1 z-10">
+                    {item.isNew && (
+                      <div className="bg-yellow-400 text-[#1A0B2E] text-[10px] font-bold px-3 py-1 rounded-bl-xl flex items-center gap-1 shadow-md">
+                        <Sparkles size={10} />
+                        NEW
+                      </div>
+                    )}
+                    {item.discount && (
+                      <div className="bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl flex items-center gap-1 shadow-md">
+                        <Tag size={10} />
+                        {item.discount}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Image */}
+                  <div className="w-24 h-24 shrink-0 rounded-xl overflow-hidden bg-purple-900 relative">
+                    <img 
+                      src={item.image} 
+                      alt={item.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 border border-white/10 rounded-xl"></div>
+                  </div>
+
+                  {/* Details & Price Container */}
+                  <div className="ml-4 flex-1 flex justify-between items-center h-full min-h-[5.5rem]">
+                    {/* Text Details */}
+                    <div className="flex-1 pr-2">
+                      <h3 className="font-semibold text-purple-50 text-base leading-tight">
+                        {item.name}
+                      </h3>
+                      {item.description && (
+                        <p className="text-purple-300 text-xs mt-1 line-clamp-2">
+                          {item.description}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Price on the Right */}
+                    <div className="shrink-0 flex flex-col items-end justify-center pl-2 border-l border-purple-800/50">
+                      <span className="text-yellow-400 font-bold text-lg">
+                        ₹{item.price}
+                      </span>
+                      {item.originalPrice && (
+                        <span className="text-purple-400/60 text-xs line-through decoration-red-500/50 mt-0.5">
+                          ₹{item.originalPrice}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        ))}
+      </main>
+      
+      {/* Footer */}
+      <footer className="bg-[#110720] py-12 text-center border-t border-purple-900/50">
+        <IceCream size={32} className="mx-auto text-purple-500 mb-4 opacity-50" />
+        <h2 
+          className="text-xl font-bold text-white uppercase tracking-wider mb-2"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
+          Merceleys Kefi
+        </h2>
+        <p className="text-purple-400 text-sm font-medium mb-1">BTM Layout, Bangalore</p>
+        <p className="text-purple-600/60 text-xs">Made with ❤️ for Ice Cream Lovers</p>
+      </footer>
+
+      {/* Global styles for hiding scrollbar */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
+    </div>
+  );
+}
