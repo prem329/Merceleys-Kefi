@@ -507,10 +507,10 @@ export default function App() {
                     loading="lazy"
                   />
                   {/* Gradient Overlay for Text Readability */}
-                  <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#1A0B2E]/90 to-transparent"></div>
+                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#1A0B2E]/90 to-transparent"></div>
 
                   {/* Content Container */}
-                  <div className="absolute top-0 inset-x-0 p-4 pt-5 flex flex-col justify-start items-center text-center">
+                  <div className="absolute bottom-0 inset-x-0 p-4 pb-5 flex flex-col justify-end items-center text-center">
                     <h3 className="font-bold text-lg text-white drop-shadow-md leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
                       {item.name}
                     </h3>
