@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { IceCream, Sparkles, Tag, Calendar, Percent, Gift, ChevronDown, Coffee, CupSoda } from 'lucide-react';
+import { IceCream, Sparkles, Tag, Calendar, Percent, Gift, ChevronDown, Coffee, CupSoda, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // ============================================================================
 // OFFERS DATA - EDIT THIS SECTION TO ADD/REMOVE GLOBAL OFFERS
@@ -18,6 +18,29 @@ const OFFERS_DATA = [
   //   description: 'Buy any Smoothie + Waffle and get 10% OFF your total bill.', 
   //   icon: Percent 
   // }
+];
+
+// ============================================================================
+// FEATURED ITEMS DATA - HORIZONTAL SLIDER
+// ============================================================================
+const FEATURED_ITEMS_DATA = [
+  { id: 'f1', name: 'Berry Burst', price: 200, image: '/Menu/Berry Burst.jpg' },
+  { id: 'f2', name: 'Blueberry Bliss Waffle', price: 220, image: '/Menu/Blueberry Bliss Waffle.jpg' },
+  { id: 'f3', name: 'Blueberry Pancake', price: 220, image: '/Menu/Blueberry Pancake.jpg' },
+  { id: 'f4', name: 'Choco Hazelnut Heaven', price: 179, image: '/Menu/Choco Hazelnut Heaven.jpg' },
+  { id: 'f5', name: 'Chocolate Pancake', price: 220, image: '/Menu/Chocolate Pancake.jpg' },
+  { id: 'f6', name: 'Dark Hot Chocolate', price: 150, image: '/Menu/Dark Hot Chocolate.jpg' },
+  { id: 'f7', name: 'Death By Chocolate', price: 205, image: '/Menu/Death By Chocolate.jpg' },
+  { id: 'f8', name: 'Exotic Dry Fruit Falooda', price: 243, image: '/Menu/Exotic Dry Fruit Falooda.jpg' },
+  { id: 'f9', name: 'Fruit Falooda Fiesta', price: 243, image: '/Menu/Fruit Falooda Fiesta.jpg' },
+  { id: 'f10', name: 'Mango Chocolate Harmony', price: 190, image: '/Menu/Mango Chocolate Harmony.jpg' },
+  { id: 'f11', name: 'Mango Popsicle Spritzer', price: 119, image: '/Menu/Mango Popsicle Spritzer.jpg' },
+  { id: 'f12', name: 'Milk Hot Chocolate', price: 150, image: '/Menu/Milk Hot Chocolate.jpg' },
+  { id: 'f13', name: 'Nutella Dream Waffle', price: 220, image: '/Menu/Nutella Dream Waffle.jpg' },
+  { id: 'f14', name: 'Nutty Mango Paradise', price: 198, image: '/Menu/Nutty Mango Paradise.jpg' },
+  { id: 'f15', name: 'Oreo Vanilla Crunch Waffle', price: 199, image: '/Menu/Oreo Vanilla Crunch Waffle.jpg' },
+  { id: 'f16', name: 'Roasted Banana Delight', price: 230, image: '/Menu/Roasted Banana Delight.jpg' },
+  { id: 'f17', name: 'Tropical Bliss', price: 212, image: '/Menu/Tropical Bliss.jpg' },
 ];
 
 // ============================================================================
@@ -122,8 +145,22 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState(OFFERS_DATA.length > 0 ? 'offers' : MENU_DATA[0].id);
   const [loadingIconIndex, setLoadingIconIndex] = useState(0);
   const navRef = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   const loadingIcons = [IceCream, CupSoda, Coffee];
+
+  // Initialize the cyclic slider position to the middle to allow swiping both directions
+  useEffect(() => {
+    if (FEATURED_ITEMS_DATA.length > 0) {
+      const timer = setTimeout(() => {
+        if (sliderRef.current) {
+          // We render 6 sets total. Center it at the start of set 3.
+          sliderRef.current.scrollLeft = (sliderRef.current.scrollWidth / 6) * 2;
+        }
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   useEffect(() => {
     // Cycle through icons for the preloader
@@ -165,7 +202,7 @@ export default function App() {
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 150;
-      
+
       let currentActive = activeCategory;
 
       // Check offers section first
@@ -178,7 +215,7 @@ export default function App() {
           }
         }
       }
-      
+
       // Check menu categories
       for (const category of MENU_DATA) {
         const element = document.getElementById(category.id);
@@ -186,7 +223,7 @@ export default function App() {
           const { top, bottom } = element.getBoundingClientRect();
           const elementTop = top + window.scrollY;
           const elementBottom = bottom + window.scrollY;
-          
+
           if (scrollPosition >= elementTop && scrollPosition <= elementBottom) {
             currentActive = category.id;
             break;
@@ -196,7 +233,7 @@ export default function App() {
 
       if (currentActive !== activeCategory) {
         setActiveCategory(currentActive);
-        
+
         // Auto-scroll the navbar to keep the active button in view
         if (navRef.current) {
           const activeBtn = document.getElementById(`nav-${currentActive}`);
@@ -249,7 +286,7 @@ export default function App() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -266,35 +303,35 @@ export default function App() {
       <section className="relative h-screen w-full flex flex-col items-center justify-center bg-yellow-400 overflow-hidden">
         {/* Decorative Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div 
-            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }} 
+          <motion.div
+            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-20 left-10 text-yellow-500/50"
           >
             <Sparkles size={48} />
           </motion.div>
-          <motion.div 
-            animate={{ y: [0, 30, 0], rotate: [0, -10, 0] }} 
+          <motion.div
+            animate={{ y: [0, 30, 0], rotate: [0, -10, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-40 right-12 text-yellow-500/40"
           >
             <IceCream size={64} />
           </motion.div>
-          <motion.div 
-            animate={{ y: [0, -15, 0], rotate: [0, 15, 0] }} 
+          <motion.div
+            animate={{ y: [0, -15, 0], rotate: [0, 15, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             className="absolute bottom-40 left-20 text-yellow-500/40"
           >
             <CupSoda size={56} />
           </motion.div>
-          <motion.div 
-            animate={{ y: [0, 25, 0], rotate: [0, -5, 0] }} 
+          <motion.div
+            animate={{ y: [0, 25, 0], rotate: [0, -5, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             className="absolute bottom-32 right-24 text-yellow-500/50"
           >
             <Coffee size={48} />
           </motion.div>
-          
+
           {/* Abstract blobs - optimized for performance */}
           <div className="absolute top-1/4 -left-20 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, rgba(253,224,71,0.4) 0%, rgba(253,224,71,0) 70%)' }}></div>
           <div className="absolute top-1/3 -right-20 w-72 h-72 rounded-full" style={{ background: 'radial-gradient(circle, rgba(234,179,8,0.4) 0%, rgba(234,179,8,0) 70%)' }}></div>
@@ -311,13 +348,13 @@ export default function App() {
           >
             <div className="relative">
               <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl"></div>
-              <img 
-                src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Soft%20ice%20cream/3D/soft_ice_cream_3d.png" 
-                alt="Ice Cream" 
+              <img
+                src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Soft%20ice%20cream/3D/soft_ice_cream_3d.png"
+                alt="Ice Cream"
                 className="w-64 h-64 object-contain mb-6 drop-shadow-2xl relative z-10"
               />
             </div>
-            <h1 
+            <h1
               className="text-5xl font-bold text-[#1A0B2E] uppercase tracking-wider mb-2 drop-shadow-sm"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
@@ -344,7 +381,7 @@ export default function App() {
       {/* Sticky Header */}
       <header id="menu-start" className="sticky top-0 z-40 bg-[#1A0B2E]/95 backdrop-blur-md border-b border-purple-800/50 pt-4 pb-2 shadow-lg">
         {/* Categories Navbar */}
-        <div 
+        <div
           ref={navRef}
           className="flex overflow-x-auto hide-scrollbar px-4 pb-2 gap-3 snap-x scroll-smooth"
         >
@@ -352,11 +389,10 @@ export default function App() {
             <button
               id="nav-offers"
               onClick={() => scrollToCategory('offers')}
-              className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition-all snap-start flex items-center gap-2 ${
-                activeCategory === 'offers'
-                  ? 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)]'
-                  : 'bg-purple-900/50 text-red-300 border border-red-900/50 hover:bg-purple-800/50'
-              }`}
+              className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition-all snap-start flex items-center gap-2 ${activeCategory === 'offers'
+                ? 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)]'
+                : 'bg-purple-900/50 text-red-300 border border-red-900/50 hover:bg-purple-800/50'
+                }`}
             >
               <Gift size={14} />
               Offers
@@ -367,11 +403,10 @@ export default function App() {
               key={category.id}
               id={`nav-${category.id}`}
               onClick={() => scrollToCategory(category.id)}
-              className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition-all snap-start ${
-                activeCategory === category.id
-                  ? 'bg-yellow-400 text-[#1A0B2E] shadow-[0_0_15px_rgba(250,204,21,0.4)]'
-                  : 'bg-purple-900/50 text-purple-200 border border-purple-700/50 hover:bg-purple-800/50'
-              }`}
+              className={`whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition-all snap-start ${activeCategory === category.id
+                ? 'bg-yellow-400 text-[#1A0B2E] shadow-[0_0_15px_rgba(250,204,21,0.4)]'
+                : 'bg-purple-900/50 text-purple-200 border border-purple-700/50 hover:bg-purple-800/50'
+                }`}
             >
               {category.title}
             </button>
@@ -381,11 +416,11 @@ export default function App() {
 
       {/* Menu Content */}
       <main className="px-4 py-8 max-w-md mx-auto pb-24">
-        
+
         {/* Offers Section */}
         {OFFERS_DATA.length > 0 && (
-          <motion.section 
-            id="offers" 
+          <motion.section
+            id="offers"
             className="mb-12 scroll-mt-36"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -394,7 +429,7 @@ export default function App() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px bg-gradient-to-r from-transparent to-red-500 flex-1"></div>
-              <h2 
+              <h2
                 className="text-xl font-bold text-red-400 uppercase tracking-widest flex items-center gap-2"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
@@ -435,11 +470,65 @@ export default function App() {
           </motion.section>
         )}
 
+        {/* Featured Items Slider (No Header) */}
+        {FEATURED_ITEMS_DATA.length > 0 && (
+          <motion.section
+            className="mb-12 overflow-hidden relative"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Swipe Indicators */}
+            <div className="absolute left-1 top-1/2 -translate-y-1/2 z-20 pointer-events-none drop-shadow-[0_0_8px_rgba(0,0,0,0.8)] text-white/80 animate-[pulse_2s_ease-in-out_infinite]">
+              <ChevronLeft size={40} strokeWidth={2} />
+            </div>
+            <div className="absolute right-1 top-1/2 -translate-y-1/2 z-20 pointer-events-none drop-shadow-[0_0_8px_rgba(0,0,0,0.8)] text-white/80 animate-[pulse_2s_ease-in-out_infinite]">
+              <ChevronRight size={40} strokeWidth={2} />
+            </div>
+
+            <div
+              ref={sliderRef}
+              className="flex overflow-x-auto hide-scrollbar gap-4 pb-4 snap-x snap-mandatory px-4 md:px-0"
+            >
+              {Array(6).fill(FEATURED_ITEMS_DATA).flat().map((item, index) => (
+                <motion.div
+                  key={`${item.id}-${index}`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: Math.min((index % FEATURED_ITEMS_DATA.length) * 0.1, 0.5) }}
+                  className="relative shrink-0 w-64 h-80 rounded-2xl overflow-hidden snap-center group shadow-xl border border-purple-800/30"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  {/* Gradient Overlay for Text Readability */}
+                  <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#1A0B2E]/90 to-transparent"></div>
+
+                  {/* Content Container */}
+                  <div className="absolute top-0 inset-x-0 p-4 pt-5 flex flex-col justify-start items-center text-center">
+                    <h3 className="font-bold text-lg text-white drop-shadow-md leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      {item.name}
+                    </h3>
+                    <div className="mt-1.5 flex items-center gap-1 bg-yellow-400 text-[#1A0B2E] px-3 py-1 rounded-full text-sm font-bold shadow-sm">
+                      ₹{item.price}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
         {/* Categories */}
         {MENU_DATA.map((category, catIndex) => (
-          <motion.section 
-            key={category.id} 
-            id={category.id} 
+          <motion.section
+            key={category.id}
+            id={category.id}
             className="mb-12 scroll-mt-36"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -448,7 +537,7 @@ export default function App() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="h-px bg-gradient-to-r from-transparent to-purple-700 flex-1"></div>
-              <h2 
+              <h2
                 className="text-xl font-bold text-yellow-400 uppercase tracking-widest"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
@@ -485,8 +574,8 @@ export default function App() {
 
                   {/* Image */}
                   <div className="w-24 h-24 shrink-0 rounded-xl overflow-hidden bg-purple-900 relative">
-                    <img 
-                      src={item.image} 
+                    <img
+                      src={item.image}
                       alt={item.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       loading="lazy"
@@ -527,11 +616,11 @@ export default function App() {
           </motion.section>
         ))}
       </main>
-      
+
       {/* Footer */}
       <footer className="bg-[#110720] py-12 text-center border-t border-purple-900/50">
         <IceCream size={32} className="mx-auto text-purple-500 mb-4 opacity-50" />
-        <h2 
+        <h2
           className="text-xl font-bold text-white uppercase tracking-wider mb-2"
           style={{ fontFamily: "'Playfair Display', serif" }}
         >
@@ -542,7 +631,8 @@ export default function App() {
       </footer>
 
       {/* Global styles for hiding scrollbar */}
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
