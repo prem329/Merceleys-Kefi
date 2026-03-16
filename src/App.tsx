@@ -51,91 +51,91 @@ const MENU_DATA = [
     id: 'smoothies',
     title: 'Smoothies',
     items: [
-      { id: 'sm1', name: 'Tropical Bliss', description: 'Mango Passion', price: 212, isNew: true, image: 'https://images.pexels.com/photos/5817621/pexels-photo-5817621.jpeg' },
-      { id: 'sm2', name: 'Berry Burst', description: 'Blueberry', price: 200, discount: '₹20 OFF', originalPrice: 220, image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=200&q=80' },
-      { id: 'sm3', name: 'Nutty Choco Delight', description: 'Chocolate Peanut Butter', price: 177, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=200&q=80' },
-      { id: 'sm4', name: 'Strawberry Dream', description: '', price: 200, image: 'https://images.pexels.com/photos/6678631/pexels-photo-6678631.jpeg' },
+      { id: 'sm1', name: 'Tropical Bliss', description: 'Mango Passion', price: 212, isNew: true, image: '/Menu/Tropical Bliss.jpg' },
+      { id: 'sm2', name: 'Berry Burst', description: 'Blueberry', price: 200, discount: '₹20 OFF', originalPrice: 220, image: '/Menu/Berry Burst.jpg' },
+      { id: 'sm3', name: 'Nutty Choco Delight', description: 'Chocolate Peanut Butter', price: 177, image: '/Menu/Nutty Choco Delight.png' },
+      { id: 'sm4', name: 'Strawberry Dream', description: '', price: 200, image: '/Menu/Strawberry Dream.png' },
     ]
   },
   {
     id: 'floats',
     title: 'Ice Cream Float',
     items: [
-      { id: 'fl1', name: 'Blueberry Breeze Float', description: 'Blueberry', price: 211, image: 'https://images.pexels.com/photos/2291070/pexels-photo-2291070.jpeg' },
-      { id: 'fl2', name: 'Strawberry Swirl Float', description: 'Strawberry', price: 179, image: 'https://images.unsplash.com/photo-1724805053611-54c999f9c70c?q=80&w=706&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-      { id: 'fl3', name: 'Mocha Chill', description: 'Coffee', price: 179, discount: '10% OFF', originalPrice: 199, image: 'https://images.pexels.com/photos/12252713/pexels-photo-12252713.jpeg' },
-      { id: 'fl4', name: 'Mango Splash', description: 'Mango', price: 179, image: 'https://images.pexels.com/photos/28525188/pexels-photo-28525188.jpeg' },
+      { id: 'fl1', name: 'Blueberry Breeze Float', description: 'Blueberry', price: 211, image: '/Menu/Blueberry Breeze Float.png' },
+      { id: 'fl2', name: 'Strawberry Swirl Float', description: 'Strawberry', price: 179, image: '/Menu/Strawberry Swirl Float.png' },
+      { id: 'fl3', name: 'Mocha Chill', description: 'Coffee', price: 179, discount: '10% OFF', originalPrice: 199, image: '/Menu/Mocha Chill.png' },
+      { id: 'fl4', name: 'Mango Splash', description: 'Mango', price: 179, image: '/Menu/Mango Splash.png' },
     ]
   },
   {
     id: 'falooda',
     title: 'Falooda',
     items: [
-      { id: 'fa1', name: 'Exotic Dry Fruit Delight', description: '', price: 243, isNew: true, image: 'https://icypep.in/wp-content/uploads/2025/10/Dry-Fruit-Falooda-.jpg' },
-      { id: 'fa2', name: 'Gulab Jamun', description: '', price: 243, image: 'https://i.pinimg.com/736x/81/de/2e/81de2e2fafe91258b6cc2a23b8ee6e6d.jpg' },
-      { id: 'fa3', name: 'Fruit Falooda Fiesta', description: '', price: 243, image: 'https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_960,w_960//InstamartAssets/Receipes/fruit_falooda.webp' },
-      { id: 'fa4', name: 'Nutty Mango Paradise', description: '', price: 198, image: 'https://cookingfromheart.com/wp-content/uploads/2022/04/Royal-Falooda-3.jpg' },
+      { id: 'fa1', name: 'Exotic Dry Fruit Delight', description: '', price: 243, isNew: true, image: '/Menu/Exotic Dry Fruit Falooda.jpg' },
+      { id: 'fa2', name: 'Gulab Jamun', description: '', price: 243, image: '/Menu/Daisy Gulab Jamun.png' },
+      { id: 'fa3', name: 'Fruit Falooda Fiesta', description: '', price: 243, image: '/Menu/Fruit Falooda Fiesta.jpg' },
+      { id: 'fa4', name: 'Nutty Mango Paradise', description: '', price: 198, image: '/Menu/Nutty Mango Paradise.jpg' },
     ]
   },
   {
     id: 'sundaes',
     title: 'Sundaes',
     items: [
-      { id: 'su1', name: 'Death by Chocolate', description: '', price: 205, image: 'https://images.pexels.com/photos/15455284/pexels-photo-15455284.jpeg' },
-      { id: 'su2', name: 'Choco Hazelnut Heaven', description: '', price: 179, image: 'https://images.pexels.com/photos/1028419/pexels-photo-1028419.jpeg' },
-      { id: 'su3', name: 'Classic Oreo Crunch', description: '', price: 170, image: 'https://images.pexels.com/photos/6160893/pexels-photo-6160893.jpeg' },
-      { id: 'su4', name: 'Roasted Banana Delight', description: '', price: 230, discount: '₹20 OFF', originalPrice: 250, image: 'https://images.pexels.com/photos/13000186/pexels-photo-13000186.jpeg' },
+      { id: 'su1', name: 'Death by Chocolate', description: '', price: 205, image: '/Menu/Death By Chocolate.jpg' },
+      { id: 'su2', name: 'Choco Hazelnut Heaven', description: '', price: 179, image: '/Menu/Choco Hazelnut Heaven.jpg' },
+      { id: 'su3', name: 'Classic Oreo Crunch', description: '', price: 170, image: '/Menu/Mango Chocolate Harmony.jpg' },
+      { id: 'su4', name: 'Roasted Banana Delight', description: '', price: 230, discount: '₹20 OFF', originalPrice: 250, image: '/Menu/Roasted Banana Delight.jpg' },
     ]
   },
   {
     id: 'waffles',
     title: 'Waffles',
     items: [
-      { id: 'wa1', name: 'Blueberry Bliss Waffle', description: '', price: 220, image: 'https://images.pexels.com/photos/14686152/pexels-photo-14686152.jpeg' },
-      { id: 'wa2', name: 'Nutella Dream Waffle', description: '', price: 220, image: 'https://images.pexels.com/photos/789327/pexels-photo-789327.jpeg' },
-      { id: 'wa3', name: 'Oreo Vanilla Crunch Waffle', description: '', price: 199, image: 'https://images.pexels.com/photos/374830/pexels-photo-374830.jpeg' },
-      { id: 'wa4', name: 'Mango Crunch Waffle', description: '', price: 231, isNew: true, image: 'https://images.pexels.com/photos/264727/pexels-photo-264727.jpeg' },
+      { id: 'wa1', name: 'Blueberry Bliss Waffle', description: '', price: 220, image: '/Menu/Blueberry Bliss Waffle.jpg' },
+      { id: 'wa2', name: 'Nutella Dream Waffle', description: '', price: 220, image: '/Menu/Nutella Dream Waffle.jpg' },
+      { id: 'wa3', name: 'Oreo Vanilla Crunch Waffle', description: '', price: 199, image: '/Menu/Oreo Vanilla Crunch Waffle.jpg' },
+      { id: 'wa4', name: 'Mango Crunch Waffle', description: '', price: 231, isNew: true, image: '/Menu/Mango Crunch Waffle.png' },
     ]
   },
   {
     id: 'mocktail',
     title: 'Mocktail',
     items: [
-      { id: 'mo1', name: 'Blueberry Mojito', description: '', price: 139, image: 'https://images.pexels.com/photos/2093089/pexels-photo-2093089.jpeg' },
-      { id: 'mo2', name: 'Chilli Guava Popsicle Spritzer', description: '', price: 119, image: 'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=200&q=80' },
-      { id: 'mo3', name: 'Mango Popsicle Spritzer', description: '', price: 119, image: 'https://images.pexels.com/photos/5817518/pexels-photo-5817518.jpeg' },
-      { id: 'mo4', name: 'Pineapple Popsicle Spritzer', description: '', price: 119, image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=200&q=80' },
+      { id: 'mo1', name: 'Blueberry Mojito', description: '', price: 139, image: '/Menu/Blueberry Mojito.png' },
+      { id: 'mo2', name: 'Chilli Guava Popsicle Spritzer', description: '', price: 119, image: '/Menu/Chilli Guava Popsicle Spritzer.png' },
+      { id: 'mo3', name: 'Mango Popsicle Spritzer', description: '', price: 119, image: '/Menu/Mango Popsicle Spritzer.jpg' },
+      { id: 'mo4', name: 'Pineapple Popsicle Spritzer', description: '', price: 119, image: '/Menu/Pineapple Popsicle Spritzer.png' },
     ]
   },
   {
     id: 'pancake',
     title: 'Pancake',
     items: [
-      { id: 'pa1', name: 'Blueberry Pancake', description: '', price: 220, image: 'https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=200&q=80' },
-      { id: 'pa2', name: 'Chocolate Pancake', description: '', price: 220, image: 'https://images.pexels.com/photos/574111/pexels-photo-574111.jpeg' },
-      { id: 'pa3', name: 'Strawberry Pancake', description: '', price: 220, image: 'https://images.pexels.com/photos/30911259/pexels-photo-30911259.jpeg' },
+      { id: 'pa1', name: 'Blueberry Pancake', description: '', price: 220, image: '/Menu/Blueberry Pancake.jpg' },
+      { id: 'pa2', name: 'Chocolate Pancake', description: '', price: 220, image: '/Menu/Chocolate Pancake.jpg' },
+      { id: 'pa3', name: 'Strawberry Pancake', description: '', price: 220, image: '/Menu/Strawberry Pancake.png' },
     ]
   },
   {
     id: 'scoops',
     title: 'Ice Cream Scoops',
     items: [
-      { id: 'sc1', name: 'Vanilla', description: '', price: 84, image: 'https://images.pexels.com/photos/14105990/pexels-photo-14105990.jpeg' },
-      { id: 'sc2', name: 'Chocolate', description: '', price: 84, image: 'https://images.pexels.com/photos/9227962/pexels-photo-9227962.jpeg' },
-      { id: 'sc3', name: 'Strawberry', description: '', price: 84, image: 'https://images.pexels.com/photos/20446417/pexels-photo-20446417.jpeg' },
-      { id: 'sc4', name: 'Spanish Delight', description: '', price: 84, image: 'https://images.pexels.com/photos/22809606/pexels-photo-22809606.jpeg' },
-      { id: 'sc5', name: 'Fig and Honey', description: '', price: 84, image: 'https://images.pexels.com/photos/28735375/pexels-photo-28735375.jpeg' },
-      { id: 'sc6', name: 'Mango', description: '', price: 84, image: 'https://images.pexels.com/photos/5060371/pexels-photo-5060371.jpeg' },
-      { id: 'sc7', name: 'Kulfi', description: '', price: 84, image: 'https://www.cookclickndevour.com/wp-content/uploads/2017/03/thandai-kulfi-recipe-f.jpg' },
-      { id: 'sc8', name: 'Coffee', description: '', price: 84, image: 'https://images.pexels.com/photos/9442600/pexels-photo-9442600.jpeg' },
-      { id: 'sc9', name: 'Passion Fruit', description: '', price: 84, image: 'https://images.pexels.com/photos/19164109/pexels-photo-19164109.jpeg' },
-      { id: 'sc10', name: 'Blueberry', description: '', price: 84, image: 'https://images.pexels.com/photos/8807333/pexels-photo-8807333.jpeg' },
-      { id: 'sc11', name: 'Strawberry cheesecake', description: '', price: 105, image: 'https://images.pexels.com/photos/2161643/pexels-photo-2161643.jpeg' },
-      { id: 'sc12', name: 'Red Velvet', description: '', price: 84, image: 'https://images.pexels.com/photos/5535557/pexels-photo-5535557.jpeg' },
-      { id: 'sc13', name: 'Tender Coconut', description: '', price: 84, image: 'https://images.pexels.com/photos/16630830/pexels-photo-16630830.jpeg' },
-      { id: 'sc14', name: 'Chikku', description: '', price: 84, image: 'https://images.pexels.com/photos/8589559/pexels-photo-8589559.jpeg' },
-      { id: 'sc15', name: 'Sitapal', description: '', price: 84, image: 'https://images.pexels.com/photos/2586924/pexels-photo-2586924.jpeg' },
-      { id: 'sc16', name: 'Butterscotch', description: '', price: 84, image: 'https://images.pexels.com/photos/15766466/pexels-photo-15766466.jpeg' },
+      { id: 'sc1', name: 'Vanilla', description: '', price: 84, image: '/Menu/Vanilla.jpeg' },
+      { id: 'sc2', name: 'Chocolate', description: '', price: 84, image: '/Menu/Chocolate.jpeg' },
+      { id: 'sc3', name: 'Strawberry', description: '', price: 84, image: '/Menu/Strawberry.jpeg' },
+      { id: 'sc4', name: 'Spanish Delight', description: '', price: 84, image: '/Menu/Spanish Delight.jpeg' },
+      { id: 'sc5', name: 'Fig and Honey', description: '', price: 84, image: '/Menu/Fig and Honey.jpeg' },
+      { id: 'sc6', name: 'Mango', description: '', price: 84, image: '/Menu/Mango.jpeg' },
+      { id: 'sc7', name: 'Kulfi', description: '', price: 84, image: '/Menu/Kulfi.jpeg' },
+      { id: 'sc8', name: 'Coffee', description: '', price: 84, image: '/Menu/Coffee.jpeg' },
+      { id: 'sc9', name: 'Passion Fruit', description: '', price: 84, image: '/Menu/Passion Fruit.jpeg' },
+      { id: 'sc10', name: 'Blueberry', description: '', price: 84, image: '/Menu/Blueberry.jpeg' },
+      { id: 'sc11', name: 'Strawberry Cheese Cake', description: '', price: 105, image: '/Menu/Strawberry Cheese Cake.jpeg' },
+      { id: 'sc12', name: 'Red Velvet', description: '', price: 84, image: '/Menu/Red Velvet.jpeg' },
+      { id: 'sc13', name: 'Tender Coconut', description: '', price: 84, image: '/Menu/Tender Coconut.jpeg' },
+      { id: 'sc14', name: 'Chikku', description: '', price: 84, image: '/Menu/Chocolate.jpeg' },
+      { id: 'sc15', name: 'Sitapal', description: '', price: 84, image: '/Menu/Sitaphal.jpeg' },
+      { id: 'sc16', name: 'Butterscotch', description: '', price: 84, image: '/Menu/Butterscotch.jpeg' },
     ]
   }
 ];
@@ -293,7 +293,7 @@ export default function App() {
               className="text-3xl font-bold tracking-wider text-[#1A0B2E] text-center uppercase"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              Merceleys Kefi
+              Mercelys Kefi
             </motion.h1>
           </motion.div>
         )}
@@ -358,7 +358,7 @@ export default function App() {
               className="text-5xl font-bold text-[#1A0B2E] uppercase tracking-wider mb-2 drop-shadow-sm"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              Merceleys Kefi
+              Mercelys Kefi
             </h1>
             <p className="text-purple-900 tracking-[0.3em] text-sm font-bold uppercase bg-white/50 px-4 py-1 rounded-full">
               BTM Layout
